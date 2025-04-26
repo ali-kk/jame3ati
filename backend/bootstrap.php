@@ -1,12 +1,12 @@
 <?php
 // backend/bootstrap.php
 
-// **** ADD THIS LINE ****
-require_once __DIR__ . '/../vendor/autoload.php';
-// *********************
 
-// 1) Load .env (Now possible AFTER autoload)
-require_once __DIR__ . '/config/db.php'; // This line was originally here
+require_once __DIR__ . '/../vendor/autoload.php';
+use Dotenv\Dotenv; $dotenv = Dotenv::createImmutable(__DIR__ . '/../../'); $dotenv->load();
+use Aws\S3\S3Client; use Aws\Exception\AwsException; // For S3 URLs if needed later
+
+require_once __DIR__ . '/config/db.php';
 
 // 2) Turn off display_errors, log everything instead
 ini_set('display_errors', '0');
