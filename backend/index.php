@@ -81,7 +81,7 @@ if (isset($conn) && $conn instanceof mysqli && $sesClient instanceof SesClient) 
     if (!isset($conn) || !$conn instanceof mysqli) $missingDeps[] = "Database connection";
     if (!isset($sesClient) || !$sesClient instanceof SesClient) $missingDeps[] = "SES client";
     error_log("Critical Error: Cannot initialize OtpController. Missing: " . implode(', ', $missingDeps));
-    header('Content-Type: application/json; charset=utf-8');
+    http_response_code(500);
     echo json_encode(["success" => false, "message" => "خطأ فادح في إعداد الخادم."], JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -98,9 +98,9 @@ switch ($action) {
          if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
          $email    = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
          $password = $_POST['password'] ?? '';
-         if (!$email) { echo json_encode(["success" => false, "message" => "الرجاء إدخال بريد إلكتروني صالح."]); exit; }
+         if (!$email) { http_response_code(400); echo json_encode(["success" => false, "message" => "الرجاء إدخال بريد إلكتروني صالح."], JSON_UNESCAPED_UNICODE); exit; }
          $passRegex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_\d]).{8,}$/';
-         if (!preg_match($passRegex, $password)) { echo json_encode(["success" => false, "message" => "كلمة المرور لا تلبي الشروط."]); exit; }
+         if (!preg_match($passRegex, $password)) { http_response_code(400); echo json_encode(["success" => false, "message" => "كلمة المرور لا تلبي الشروط."], JSON_UNESCAPED_UNICODE); exit; }
          $_SESSION['temp_password'] = $password;
          $result = $otpController->processSendOtp($email); // OtpController handles session 'otp_email'
          if ($result['success']) { $_SESSION['email'] = $email; unset($_SESSION['verified']); } // Keep 'email' for potential fallback?
@@ -110,7 +110,7 @@ switch ($action) {
          if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
          // Use 'otp_email' primarily, fallback to 'email'
          $email = $_SESSION['otp_email'] ?? $_SESSION['email'] ?? '';
-         if (!$email) { echo json_encode(["success" => false, "message" => "انتهت الجلسة."]); exit; }
+         if (!$email) { http_response_code(401); echo json_encode(["success" => false, "message" => "انتهت الجلسة."], JSON_UNESCAPED_UNICODE); exit; }
          // Ensure verify_otp.php uses $email correctly
          require_once __DIR__ . '/routes/verify_otp.php'; exit;
 
@@ -151,10 +151,10 @@ switch ($action) {
         if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
 
         // 1. Check prerequisites
-        if (!isset($_SESSION['verified']) || $_SESSION['verified'] !== true) { echo json_encode(["success" => false, "message" => "لم يتم التحقق من هويتك."]); exit; }
+        if (!isset($_SESSION['verified']) || $_SESSION['verified'] !== true) { http_response_code(401); echo json_encode(["success" => false, "message" => "لم يتم التحقق من هويتك."], JSON_UNESCAPED_UNICODE); exit; }
         $email = $_SESSION['otp_email'] ?? ($_SESSION['email'] ?? '');
-        if (empty($email)) { error_log("Complete registration failed: Missing session email."); echo json_encode(["success" => false, "message" => "بيانات البريد الإلكتروني للجلسة مفقودة."]); exit; }
-        if (empty($_SESSION['temp_password'])) { error_log("Complete registration failed: Missing session password."); echo json_encode(["success" => false, "message" => "بيانات كلمة المرور للجلسة مفقودة."]); exit; }
+        if (empty($email)) { error_log("Complete registration failed: Missing session email."); http_response_code(500); echo json_encode(["success" => false, "message" => "بيانات البريد الإلكتروني للجلسة مفقودة."], JSON_UNESCAPED_UNICODE); exit; }
+        if (empty($_SESSION['temp_password'])) { error_log("Complete registration failed: Missing session password."); http_response_code(500); echo json_encode(["success" => false, "message" => "بيانات كلمة المرور للجلسة مفقودة."], JSON_UNESCAPED_UNICODE); exit; }
 
         // 2. Get Form Data & Determine User Type/Role ID
         $userType = $_POST['userType'] ?? 'student';
@@ -199,34 +199,34 @@ switch ($action) {
         // 3. Server-Side Validation
         $minAge = 17;
         $maxAge = ($userType === 'teacher') ? 65 : 55;
-        if (!checkBirthday($birthday, $minAge, $maxAge)) { echo json_encode(["success" => false, "message" => "العمر خارج المدى ({$minAge}-{$maxAge}) أو تاريخ الميلاد غير صالح."]); exit; }
+        if (!checkBirthday($birthday, $minAge, $maxAge)) { http_response_code(400); echo json_encode(["success" => false, "message" => "العمر خارج المدى ({$minAge}-{$maxAge}) أو تاريخ الميلاد غير صالح."], JSON_UNESCAPED_UNICODE); exit; }
 
         // Common required fields
         if (empty($firstName) || empty($lastName) || empty($thirdName) || empty($motherFirstName) || empty($motherSecondName) || empty($gender) || empty($city) || empty($nationality) || !$uni_id || !$col_id || !$dep_id) {
-             echo json_encode(["success" => false, "message" => "الرجاء ملء جميع الحقول الشخصية والأكاديمية العامة."]); exit;
+             http_response_code(400); echo json_encode(["success" => false, "message" => "الرجاء ملء جميع الحقول الشخصية والأكاديمية العامة."], JSON_UNESCAPED_UNICODE); exit;
         }
-        if (!in_array($gender, ['Male', 'Female'])) { echo json_encode(["success" => false, "message" => "قيمة الجنس غير صالحة."]); exit; }
+        if (!in_array($gender, ['Male', 'Female'])) { http_response_code(400); echo json_encode(["success" => false, "message" => "قيمة الجنس غير صالحة."], JSON_UNESCAPED_UNICODE); exit; }
 
         // Student specific required fields
         if ($userType === 'student') {
             if (!$stage || empty($degree) || empty($study_mode)) {
-                echo json_encode(["success" => false, "message" => "الرجاء ملء حقول المرحلة والدرجة ونوع الدراسة للطالب."]); exit;
+                http_response_code(400); echo json_encode(["success" => false, "message" => "الرجاء ملء حقول المرحلة والدرجة ونوع الدراسة للطالب."], JSON_UNESCAPED_UNICODE); exit;
             }
         }
 
         // Teacher specific required fields
         if ($userType === 'teacher') {
             if (empty($academic_title)) { // Check the correct variable
-                echo json_encode(["success" => false, "message" => "الرجاء اختيار اللقب العلمي للتدريسي."]); exit;
+                http_response_code(400); echo json_encode(["success" => false, "message" => "الرجاء اختيار اللقب العلمي للتدريسي."], JSON_UNESCAPED_UNICODE); exit;
             }
         }
 
         // 4. Check for existing user by name (fourthName removed)
         $stmtCheck = $conn->prepare("SELECT id FROM users WHERE first_name=? AND last_name=? AND third_name=? AND mother_first_name=? AND mother_second_name=? LIMIT 1");
-        if(!$stmtCheck) { error_log("Prepare failed (check user): ".$conn->error); echo json_encode(["success" => false, "message" => "خطأ في قاعدة البيانات (CU)."]); exit; }
+        if(!$stmtCheck) { error_log("Prepare failed (check user): ".$conn->error); http_response_code(500); echo json_encode(["success" => false, "message" => "خطأ في قاعدة البيانات (CU)."], JSON_UNESCAPED_UNICODE); exit; }
         $stmtCheck->bind_param("sssss", $firstName, $lastName, $thirdName, $motherFirstName, $motherSecondName); // Removed one 's'
         $stmtCheck->execute(); $stmtCheck->store_result();
-        if ($stmtCheck->num_rows > 0) { echo json_encode(["success" => false, "message" => "يوجد مستخدم مسجل بنفس الاسم واسم الأم."]); $stmtCheck->close(); exit; }
+        if ($stmtCheck->num_rows > 0) { http_response_code(400); echo json_encode(["success" => false, "message" => "يوجد مستخدم مسجل بنفس الاسم واسم الأم."], JSON_UNESCAPED_UNICODE); $stmtCheck->close(); exit; }
         $stmtCheck->close();
 
         // 5. Validate Uploaded Files (Conditional Uni ID Back)
@@ -249,24 +249,24 @@ switch ($action) {
         $imageMimes = ['image/jpeg', 'image/png'];
 
         $profilePicResult = validate_uploaded_file('profile_pic', $imageMimes, $maxFileSize, true);
-        if (!$profilePicResult['success']) { echo json_encode($profilePicResult); exit; } $profilePicDetails = $profilePicResult['data'];
+        if (!$profilePicResult['success']) { http_response_code(400); echo json_encode($profilePicResult); exit; } $profilePicDetails = $profilePicResult['data'];
 
         $uniIdFrontResult = validate_uploaded_file('uni_id_front', $imageMimes, $maxFileSize, true);
-        if (!$uniIdFrontResult['success']) { echo json_encode($uniIdFrontResult); exit; } $uniIdFrontDetails = $uniIdFrontResult['data'];
+        if (!$uniIdFrontResult['success']) { http_response_code(400); echo json_encode($uniIdFrontResult); exit; } $uniIdFrontDetails = $uniIdFrontResult['data'];
 
         $isUniIdBackRequired = ($userType === 'student');
         $uniIdBackResult = validate_uploaded_file('uni_id_back', $imageMimes, $maxFileSize, $isUniIdBackRequired);
-        if (!$uniIdBackResult['success']) { echo json_encode($uniIdBackResult); exit; }
+        if (!$uniIdBackResult['success']) { http_response_code(400); echo json_encode($uniIdBackResult); exit; }
         $uniIdBackDetails = $uniIdBackResult['data'];
 
         $natIdFrontResult = validate_uploaded_file('national_id_front', $imageMimes, $maxFileSize, true);
-        if (!$natIdFrontResult['success']) { echo json_encode($natIdFrontResult); exit; } $natIdFrontDetails = $natIdFrontResult['data'];
+        if (!$natIdFrontResult['success']) { http_response_code(400); echo json_encode($natIdFrontResult); exit; } $natIdFrontDetails = $natIdFrontResult['data'];
 
         $natIdBackResult = validate_uploaded_file('national_id_back', $imageMimes, $maxFileSize, true);
-        if (!$natIdBackResult['success']) { echo json_encode($natIdBackResult); exit; } $natIdBackDetails = $natIdBackResult['data'];
+        if (!$natIdBackResult['success']) { http_response_code(400); echo json_encode($natIdBackResult); exit; } $natIdBackDetails = $natIdBackResult['data'];
 
         $uploadsNeeded = $profilePicDetails || $uniIdFrontDetails || $uniIdBackDetails || $natIdFrontDetails || $natIdBackDetails;
-        if ($uploadsNeeded && $s3Client === null) { error_log("S3 client not configured, but file uploads are present."); echo json_encode(["success" => false, "message" => "خطأ في إعداد خدمة تخزين الملفات."]); exit; }
+        if ($uploadsNeeded && $s3Client === null) { error_log("S3 client not configured, but file uploads are present."); http_response_code(500); echo json_encode(["success" => false, "message" => "خطأ في إعداد خدمة تخزين الملفات."], JSON_UNESCAPED_UNICODE); exit; }
 
         // 6. Database Transaction
         $conn->begin_transaction();
@@ -370,7 +370,8 @@ switch ($action) {
             // Clear sensitive session data AFTER successful commit
             unset($_SESSION['temp_password'], $_SESSION['verified'], $_SESSION['otp_email'], $_SESSION['email']);
 
-            echo json_encode(["success" => true, "message" => "تم إكمال تسجيل بياناتك ورفع المستندات بنجاح. حسابك قيد المراجعة."]);
+            http_response_code(201);
+            echo json_encode(["success" => true, "message" => "تم إكمال تسجيل بياناتك ورفع المستندات بنجاح. حسابك قيد المراجعة."], JSON_UNESCAPED_UNICODE);
 
         } catch (Exception $e) {
             $conn->rollback();
@@ -380,14 +381,16 @@ switch ($action) {
             if (strpos($userMessage, "DB Error") === 0 || strpos($userMessage, "S3 Upload Error") === 0 || strpos($userMessage, "Failed to get new user ID") === 0 || strpos($userMessage, "فشل تحميل") === 0) {
                 $userMessage = "حدث خطأ فني أثناء حفظ البيانات أو رفع الملفات.";
             }
-            echo json_encode(["success" => false, "message" => "حدث خطأ أثناء إكمال التسجيل: " . $userMessage]);
+            http_response_code(500);
+            echo json_encode(["success" => false, "message" => "حدث خطأ أثناء إكمال التسجيل: " . $userMessage], JSON_UNESCAPED_UNICODE);
         }
         exit;
     // --- **** END COMPLETE EXTENDED REGISTRATION **** ---
 
 
     default:
-        echo json_encode(["success" => false, "message" => "إجراء غير صالح."]);
+        http_response_code(400);
+        echo json_encode(["success" => false, "message" => "إجراء غير صالح."], JSON_UNESCAPED_UNICODE);
         exit;
 } // End Switch
 

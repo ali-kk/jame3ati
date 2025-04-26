@@ -79,17 +79,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
   
                 let data;
+                const responseText = await res.text();
                 try {
-                     data = await res.json();
+                    data = JSON.parse(responseText);
                 } catch (jsonError) {
-                     console.error("Failed to parse login response JSON:", jsonError);
-                     throw new Error("حدث خطأ غير متوقع من الخادم.");
+                    console.error("Failed to parse login response JSON:", jsonError);
+                    throw new Error("حدث خطأ غير متوقع من الخادم.");
                 }
   
   
                 if (!res.ok) {
-                     // Use message from backend if available, otherwise generic
-                     throw new Error(data.message || `خطأ ${res.status}: فشل تسجيل الدخول.`);
+                    // Use message from backend if available, otherwise generic
+                    throw new Error(data.message || `خطأ ${res.status}: فشل تسجيل الدخول.`);
                 }
   
                 // Handle Success/Failure based on parsed data
