@@ -22,5 +22,6 @@ if ($origin && in_array($origin, $allowed, true)) {
 }
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, X-CSRF-Token");
+header("Access-Control-Allow-Credentials: true");
 // short-circuit preflight
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }

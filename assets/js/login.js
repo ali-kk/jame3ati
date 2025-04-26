@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const res = await fetch(`${baseURL}?action=login`, {
                     method: 'POST',
+                    credentials: 'include',
                     body: formData
                 });
   
