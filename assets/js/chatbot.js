@@ -210,7 +210,7 @@ function copyToClipboard(textToCopy, buttonElement) {
 function addMessageToUI(text, sender) {
     const messageContainer = document.createElement('div');
     messageContainer.className = `message-container ${sender}`;
-    const avatarPath = 'http://localhost/jame3ati/assets/images/logo2.png';
+    const avatarPath = window.location.origin + '/assets/images/logo2.png';
   
     // Basic HTML escaping
     const escapeHtml = (unsafe) => {
@@ -354,7 +354,7 @@ async function sendMessage() {
      chatMessages.scrollTop = currentScroll; // Restore scroll position roughly
 
     try {
-        const response = await fetch('http://localhost/jame3ati/backend/ai_api.php', { // Make sure this points to your PHP file
+        const response = await fetch(window.location.origin + '/backend/ai_api.php', { // Make sure this points to your PHP file
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: messageText }),
@@ -429,7 +429,7 @@ function showTypingIndicator() {
     typingDiv.className = 'message-container ai typing-indicator';
 
     // --- Make sure this path is correct ---
-    const avatarPath = 'http://localhost/jame3ati/assets/images/logo2.png';
+    const avatarPath = window.location.origin + '/assets/images/logo2.png';
 
     typingDiv.innerHTML = `
        <div class="message-content">
@@ -462,7 +462,7 @@ async function generateChatName(firstMessage) {
      // You can uncomment the fetch call if your API supports name generation
     
     try {
-        const response = await fetch('http://localhost/jame3ati/backend/ai_api.php', { // Adjust endpoint if different
+        const response = await fetch(window.location.origin + '/backend/ai_api.php', { // Adjust endpoint if different
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

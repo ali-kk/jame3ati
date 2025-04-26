@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resendTimerDisplay  = document.getElementById('resendTimerDisplay');
 
     // ----- Endpoints -----
-    const BASE_URL = 'http://localhost/jame3ati/backend/index.php'; // Adjust if needed
+    const BASE_URL = window.location.origin + '/backend/index.php'; // Dynamic origin
     const SEND_OTP_URL = `${BASE_URL}?action=send_otp`;
     const VERIFY_OTP_URL = `${BASE_URL}?action=verify_otp`;
 

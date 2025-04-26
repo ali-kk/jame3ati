@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     // Backend API endpoint
-    const baseURL = 'http://localhost/jame3ati/backend/index.php'; // Adjust if necessary
+    const baseURL = window.location.origin + '/backend/index.php'; // Adjust if necessary
 
     // Get references to DOM elements
     const regMessage      = document.getElementById('regMessage');

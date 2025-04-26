@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Set the backend endpoint; note we use a dedicated login endpoint
-    const baseURL = 'http://localhost/jame3ati/backend/login.php'; // Adjust path if needed
+    const baseURL = window.location.origin + '/backend/login.php'; // Dynamic origin
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
     const loginEmail = document.getElementById('loginEmail');

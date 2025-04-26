@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Content area element
     const courseCardsContainer = document.getElementById('course-cards-container'); // Re-added
 
-    const userDataEndpoint =  'http://localhost/jame3ati/backend/user_data.php';
+    const userDataEndpoint = window.location.origin + '/backend/user_data.php';
     const defaultProfilePic = '../assets/images/placeholder-profile.png';
     const defaultCourseImage = '../assets/images/default-course-image.png'; // Add a default course image path
-    const loginPageUrl = 'http://localhost/jame3ati/backend/login.php';
+    const loginPageUrl = window.location.origin + '/backend/login.php';
 
     // --- Helper Functions ---
     function showHomeMessage(msg, isError = false) { /* ... same as before ... */

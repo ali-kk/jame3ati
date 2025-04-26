@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Elements ---
     // Get the main container where all assignment cards will be placed.
     // *** IMPORTANT: Make sure your HTML has an element with this ID (or change the ID here) ***
-    const courseDataEndpoint = 'http://localhost/jame3ati/backend/subject_data.php';
-    const profileDataEndpoint = 'http://localhost/jame3ati/backend/user_data.php';
-    const defaultProfilePic = 'http://localhost/jame3ati/assets/images/placeholder-profile.png'; // Adjusted path assumption
-    const defaultCourseImage = 'http://localhost/jame3ati/assets/images/default-course-image.png'; // Adjusted path assumption
+    const courseDataEndpoint = window.location.origin +'/backend/subject_data.php';
+    const profileDataEndpoint = window.location.origin +'/backend/user_data.php';
+    const defaultProfilePic = window.location.origin +'/assets/images/placeholder-profile.png'; 
+    const defaultCourseImage = window.location.origin +'/assets/images/default-course-image.png'; 
     const loginPageUrl = 'login.html'; // Adjust if needed
     const allAssignmentsContainer = document.getElementById('assignmentsListContainer');
     const loadingIndicator = document.getElementById('assignmentsLoading'); // Optional
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(messageArea) messageArea.classList.add('d-none');
 
         try {
-            const response = await fetch('http://localhost/jame3ati/backend/assignments_data.php'); // Verify Endpoint
+            const response = await fetch(window.location.origin + '/backend/assignments_data.php'); // Verify Endpoint
             if (!response.ok) { throw new Error(`Network error (${response.status})`); }
             // Add robust JSON check
             if (response.headers.get('content-type')?.indexOf('application/json') === -1) {
