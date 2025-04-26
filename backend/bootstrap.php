@@ -1,11 +1,16 @@
 <?php
 // backend/bootstrap.php
 
-// 1) Load .env (two levels up)
-require_once __DIR__ . '/config/db.php';
+// **** ADD THIS LINE ****
+require_once __DIR__ . '/../vendor/autoload.php';
+// *********************
+
+// 1) Load .env (Now possible AFTER autoload)
+require_once __DIR__ . '/config/db.php'; // This line was originally here
 
 // 2) Turn off display_errors, log everything instead
 ini_set('display_errors', '0');
+
 ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ . '/../logs/php_errors.log');
 error_reporting(E_ALL);
