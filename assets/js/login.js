@@ -83,8 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                      data = await res.json();
                 } catch (jsonError) {
                      console.error("Failed to parse login response JSON:", jsonError);
-                     const textResponse = await res.text();
-                     console.error("Raw login response text:", textResponse);
                      throw new Error("حدث خطأ غير متوقع من الخادم.");
                 }
   
