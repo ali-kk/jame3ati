@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - جامعتي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+         <div class="container">
+             <a class="navbar-brand" href="#">
+                 <img src="assets/images/logo2.png" alt="شعار جامعتي" class="logo-img">
+                 <span class="brand-text">منصة جامعتي</span>
+             </a>
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="تبديل التنقل">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
+             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                     <li class="nav-item">
+                         <a class="nav-link" href="home.html">الرئيسية</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" href="#">عن الجامعة</a>
+                     </li>
+                     <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                             الكليات
+                         </a>
+                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                             <li><a class="dropdown-item" href="#">كلية الهندسة</a></li>
+                             <li><a class="dropdown-item" href="#">كلية الطب</a></li>
+                             <li><hr class="dropdown-divider"></li>
+                             <li><a class="dropdown-item" href="#">كلية العلوم</a></li>
+                         </ul>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" href="#">اتصل بنا</a>
+                     </li>
+                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                         <a href="index.html" class="btn btn-outline-primary btn-sm nav-btn">إنشاء حساب</a>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+     </nav>
+ 
+     <!-- Main Content -->
+     <main class="main-content">
+         <div class="container py-5">
+             <div class="row justify-content-center">
+                 <div class="col-md-8 col-lg-6 col-xl-5">
+                     <div class="registration-card">
+                         <div class="card-body p-4 p-md-5">
+                             <h2 class="text-center mb-4 form-title">تسجيل الدخول</h2>
+                             <div id="loginMessage" class="alert d-none mb-3"></div>
+ 
+                             <form id="loginForm" novalidate>
+                                 <div class="form-floating mb-3">
+                                     <input type="email" class="form-control" id="loginEmail" placeholder="البريد الإلكتروني" required>
+                                     <label for="loginEmail">البريد الإلكتروني</label>
+                                 </div>
+                                 <div class="mb-3 position-relative">
+                                     <div class="form-floating">
+                                         <input type="password" class="form-control" id="loginPassword" placeholder="كلمة المرور" required>
+                                         <label for="loginPassword">كلمة المرور</label>
+                                     </div>
+                                     <button type="button" class="btn btn-link password-toggle" id="toggleLoginPass">
+                                         <i class="fas fa-eye"></i>
+                                     </button>
+                                 </div>
+ 
+                                 <button type="submit" class="btn btn-primary w-100 btn-lg submit-btn">
+                                     <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                     تسجيل الدخول
+                                 </button>
+                             </form>
+ 
+                             <p class="text-center mt-4">ليس لديك حساب؟ <a href="index.html">إنشاء حساب جديد</a></p>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </main>
+ 
+     <!-- Footer -->
+     <footer class="footer mt-auto py-3 bg-light text-center">
+         <div class="container">
+             <span class="text-muted">© 2025 منصة جامعتي. جميع الحقوق محفوظة.</span>
+         </div>
+     </footer>
+ 
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+     <script src="assets/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+.profile-section {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.profile-pic-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-left: 2rem;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #f8f9fa;
+}
+
+.profile-pic-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.profile-pic-edit:hover {
+    background: #0056b3;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-info h2 {
+    margin-bottom: 0.5rem;
+}
+
+.profile-info .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.info-row {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.document-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.document-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.document-title {
+    padding: 1rem;
+    background: #f8f9fa;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-pic-container {
+        margin-left: 0;
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-row div {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Accessibility improvements */
+.profile-pic-edit:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .profile-pic-edit,
+    .navbar,
+    .footer,
+    button {
+        display: none !important;
+    }
+    
+    .profile-section {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}

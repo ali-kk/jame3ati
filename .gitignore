@@ -1,0 +1,14 @@
+# Environment variables - DO NOT COMMIT!
+.env
+backend/config/.env
+
+# Vendor directory (Composer dependencies)
+vendor/
+
+# Log files
+*.log
+
+# IDE/OS specific files
+.idea/
+.vscode/
+*.DS_Store

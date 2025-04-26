@@ -1,0 +1,146 @@
+/* frontend/assets/css/subject_details.css */
+
+/* --- Base Styles --- */
+body { background-color: #212529; color: #f8f9fa; font-family: 'Cairo', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+.main-content { flex-grow: 1; }
+.content-area { padding-top: 2rem; padding-bottom: 3rem; }
+
+/* --- Header Section --- */
+.course-details-header { background-color: #343a40; padding: 2rem 1.5rem; border-radius: 0.75rem; margin-bottom: 2.5rem; border: 1px solid #495057; display: flex; align-items: flex-start; gap: 1.5rem; }
+.course-header-image img#courseImage {
+    width: 160px; /* Adjusted size from previous step */
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: contain; /* Use contain as requested before */
+    border-radius: 0.5rem;
+    background-color: #343a40; /* Match card background for contain */
+    border: 1px solid #555;
+    padding: 5px; /* Optional padding for contain */
+}
+.course-header-info { flex-grow: 1; }
+.course-header-info h1#courseTitle { font-weight: 700; color: #ffffff; margin-top: 0; margin-bottom: 0.5rem; font-size: 2.2rem; line-height: 1.3; }
+
+/* --- Teacher Info Block (Updated for better placement) --- */
+.teacher-info {
+    display: flex; /* Changed from inline-flex */
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.15); /* Adjusted background */
+    padding: 0.6rem 1rem;
+    border-radius: 8px; /* Changed from pill shape */
+    border: 1px solid #454b51;
+    /* Removed max-width: fit-content; to allow natural width */
+    margin-top: 0.75rem; /* Space below title */
+    margin-bottom: 1.5rem; /* Space above description */
+    /* Removed transition and hover effect */
+}
+
+.teacher-info img#teacherProfilePic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 0.8rem; /* RTL space */
+    background-color: #6c757d;
+    border: 2px solid #adb5bd;
+}
+
+.teacher-info .teacher-details {
+    line-height: 1.3;
+    text-align: right;
+}
+
+.teacher-info span#teacherTitle {
+    font-size: 0.85rem;
+    color: #adb5bd;
+    display: block;
+}
+
+.teacher-info span#teacherName {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e9ecef;
+    display: block;
+}
+/* --- End Teacher Info Block --- */
+
+
+/* --- Course Description & Custom Scrollbar --- */
+.course-header-info p#courseDescription {
+    color: #ced4da;
+    font-size: 1rem;
+    line-height: 1.7;
+    /* margin-bottom: 1.5rem; */ /* No bottom margin needed now */
+    white-space: pre-wrap;
+    max-height: 100px; /* Adjust this value to show more/less text before scroll */
+    overflow-y: auto; /* Makes scrollbar appear ONLY when needed */
+    padding-left: 10px; /* Space for scrollbar in RTL */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #6c757d rgba(0, 0, 0, 0.1); /* Firefox */
+}
+/* WebKit scrollbar styles */
+.course-header-info p#courseDescription::-webkit-scrollbar { width: 8px; }
+.course-header-info p#courseDescription::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 4px; }
+.course-header-info p#courseDescription::-webkit-scrollbar-thumb { background-color: #6c757d; border-radius: 4px; border: 2px solid transparent; background-clip: content-box; }
+.course-header-info p#courseDescription::-webkit-scrollbar-thumb:hover { background-color: #adb5bd; }
+/* --- End Description & Scrollbar --- */
+
+
+/* --- Tabs Styling --- */
+.course-tabs .nav-tabs { border-bottom: 1px solid #495057; margin-bottom: 1.5rem; }
+.course-tabs .nav-link { color: #adb5bd; font-weight: 600; padding: 0.8rem 1.5rem; border: none; border-bottom: 3px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; font-size: 1rem; background-color: transparent; margin-left: 0.25rem; cursor: pointer; }
+.course-tabs .nav-link i { margin-left: 0.5rem; }
+.course-tabs .nav-link:hover { color: #f8f9fa; border-bottom-color: #6c757d; }
+.course-tabs .nav-link.active { color: #ffffff; background-color: transparent; border-bottom: 3px solid #ffffff; }
+.tab-content { min-height: 250px; padding-top: 1rem; }
+.tab-content .tab-pane { background-color: rgba(52, 58, 64, 0.3); border-radius: 0.375rem; padding: 1.5rem; }
+
+/* --- File List Styles --- */
+.material-list .list-group-item { background-color: transparent !important; border-color: rgba(255, 255, 255, 0.1) !important; color: #f8f9fa; padding: 1rem 0.5rem !important; }
+.material-list .list-group-item:last-child { border-bottom: none !important; }
+.material-list .list-group-item:hover { background-color: rgba(255, 255, 255, 0.04) !important; }
+.material-list .material-title { margin-bottom: 0.15rem !important; font-size: 1.05rem; font-weight: 600; color: #e9ecef; }
+.material-list .material-description { color: #adb5bd !important; font-size: 0.9rem; margin-bottom: 0 !important; }
+.material-list i.fa-fw.fa-2x { width: 2em; font-size: 1.75em; vertical-align: middle; }
+.material-actions { text-align: left !important; flex-shrink: 0; margin-top: 0.5rem; }
+.material-actions .btn { margin-right: 0.5rem; padding: 0.25rem 0.6rem; font-size: 0.8rem; }
+.material-actions .btn i { margin-left: 0.25rem; }
+.material-actions .badge { font-size: 0.75rem; vertical-align: middle; }
+.material-actions small.text-muted { font-size: 0.75rem; }
+.material-actions .btn.disabled { opacity: 0.5; cursor: not-allowed; }
+/* Icon Colors */
+.fa-file-powerpoint { color: #D04423; } .fa-file-pdf { color: #F40F02; } .fa-file-word { color: #2A5699; } .fa-file-excel { color: #1D6F42; } .fa-file-archive { color: #ffc107; } .fa-file-image { color: #0dcaf0; } .fa-file-video { color: #6f42c1; } .fa-link { color: #fd7e14; } .fa-clipboard-list { color: #0d6efd; } .fa-file { color: #6c757d; }
+
+/* --- Video List Item Styling --- */
+.video-list .list-group-item { background-color: transparent !important; border-color: rgba(255, 255, 255, 0.1) !important; color: #f8f9fa; padding: 0.75rem 1rem !important; cursor: pointer; transition: background-color 0.2s ease; }
+.video-list .list-group-item:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; }
+.video-list .list-group-item:hover { background-color: rgba(255, 255, 255, 0.05) !important; }
+.video-list .video-item-title { font-weight: 600; font-size: 1.05rem; color: #e9ecef; }
+.video-list .video-item-date { font-size: 0.8rem; color: #adb5bd; }
+.video-list .play-icon { color: #adb5bd; font-size: 1.2rem; transition: color 0.2s ease; }
+.video-list .list-group-item:hover .play-icon { color: #ffffff; }
+.video-item-title {margin-right: 10%;}
+/* --- Video Modal Styling --- */
+#videoPlayerModal .modal-content { background-color: #212529; border: 1px solid #495057; }
+#videoPlayerModal .modal-header { border-bottom: 1px solid #495057; }
+#videoPlayerModal .modal-title { color: #f8f9fa; }
+#videoPlayerModal .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
+#videoPlayerModal .modal-body { padding: 0; background-color: #000; height: 75vh; }
+#videoPlayerModal .modal-body iframe { display: block; width: 100%; height: 100%; }
+/* Responsive Modal Size */
+@media (min-width: 992px) { #videoPlayerModal .modal-lg { max-width: 900px; } }
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 767.98px) {
+    .course-details-header { flex-direction: column; align-items: center; text-align: center; }
+    .course-header-image img#courseImage { width: 120px; aspect-ratio: 1 / 1; margin-bottom: 1rem; }
+    .teacher-info { justify-content: center; width: auto; margin-top: 1rem; }
+    .course-header-info h1#courseTitle { font-size: 1.8rem; }
+    .course-tabs .nav-link { padding: 0.7rem 1rem; font-size: 0.9rem; }
+    .material-list .list-group-item .d-flex.w-100 { flex-direction: column; align-items: flex-start !important; }
+    .material-actions { text-align: right !important; width: 100%; margin-top: 0.75rem; }
+    .material-actions small.text-muted { display: inline-block !important; margin-right: 1rem; }
+    .video-list .list-group-item .d-flex.justify-content-between { flex-wrap: wrap; }
+    .video-list .list-group-item .play-icon { margin-top: 0.5rem; width: 100%; text-align: left !important; }
+}

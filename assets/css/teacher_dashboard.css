@@ -1,0 +1,94 @@
+/* frontend/assets/css/teacher_dashboard.css */
+
+/* Styles specific to the teacher dashboard */
+
+.teacher-course-card img {
+    height: 150px;
+    object-fit: contain; /* Changed to contain to prevent cropping logos */
+    /* Center images within card */
+    margin-left: auto;
+    margin-right: auto;
+    display: block; /* Needed for margin auto to work */
+    max-width: 90%; /* Prevent image overflow, adjust as needed */
+    padding-top: 10px; /* Add some padding above image */
+}
+
+.stat-card i {
+    opacity: 0.6;
+}
+
+#mainContentArea .card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#mainContentArea .card:not(.stat-card):hover { /* Apply hover only to course cards */
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* Smaller buttons on course cards */
+.btn-manage-course {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+}
+
+/* Ensure minimum width for modal action buttons */
+.modal-footer .btn-primary,
+.modal-footer .btn-secondary {
+    min-width: 100px;
+}
+
+/* Styling for manage content modal list items */
+#manageContentModal .list-group-item {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+#manageContentModal .list-group-item button {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    margin-left: 0.2rem; /* Space between buttons */
+}
+
+/* Responsive adjustments for manage content modal buttons */
+@media (max-width: 576px) {
+    #manageContentModal .list-group-item {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    #manageContentModal .list-group-item > div:last-child {
+        margin-top: 0.5rem;
+        width: 100%;
+        text-align: left; /* Align buttons left on small screens */
+    }
+     #manageContentModal .list-group-item button {
+         margin-left: 0;
+         margin-right: 0.2rem; /* Space between buttons */
+     }
+}
+
+/* Styles for main assignments tab table */
+#assignmentsMainContent .table th {
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+#assignmentsMainContent .table td {
+     vertical-align: middle;
+     font-size: 0.9rem;
+}
+
+/* Reduce padding in table cells */
+#assignmentsMainContent .table > :not(caption) > * > * {
+    padding: 0.5rem 0.5rem;
+}
+
+#assignmentsMainContent .main-grade-input {
+    max-width: 80px; /* Ensure grade input doesn't get too wide */
+}
+
+#assignmentsMainContent .main-view-submission-btn,
+#assignmentsMainContent .main-save-grade-btn {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+}
