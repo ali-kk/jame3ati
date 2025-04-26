@@ -1,5 +1,8 @@
 <?php
 // login.php
+// Auto-prepend bootstrap for CORS, error handling, and OPCache
+require_once __DIR__ . '/bootstrap.php';
+
 // Ensure session is started if needed, especially if setting session variables on success
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();

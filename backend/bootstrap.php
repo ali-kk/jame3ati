@@ -19,8 +19,11 @@ $allowed = array_filter(array_map('trim', explode(',', $_ENV['ALLOWED_ORIGINS'] 
 $origin  = $_SERVER['HTTP_ORIGIN'] ?? '';
 if ($origin && in_array($origin, $allowed, true)) {
     header("Access-Control-Allow-Origin: $origin");
+    // Inform caches that responses vary by Origin
+    header("Vary: Origin");
 }
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Max-Age: 86400");
 header("Access-Control-Allow-Headers: Content-Type, X-CSRF-Token");
 header("Access-Control-Allow-Credentials: true");
 // short-circuit preflight
